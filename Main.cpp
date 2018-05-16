@@ -25,10 +25,12 @@ std::vector<Element> Djikstra(unsigned int max_vec, unsigned int start, std::vec
 		pq.insert(i, 0, (i == start) ? 0.0 : std::numeric_limits<double>::max());
 	}
 
-	std::vector<std::list<std::pair<unsigned int, double>>> adj(max_vec + 1);
+	std::vector<std::list<std::pair<std::shared_ptr<Element>, double>>> adj(max_vec + 1);
 	for (unsigned int i = 0; i < edges.size(); i++)
 	{
-		adj[edges[i].in].push_back(std::pair<unsigned int, double>(edges[i].out, edges[i].w));
+		unsigned int j;
+		pq.in_queue(edges[i].out, j);
+		adj[edges[i].in].push_back(std::pair<std::shared_ptr<Element>, double>(pq.at(j), edges[i].w));
 	}
 
 	while (!pq.empty())
@@ -39,13 +41,10 @@ std::vector<Element> Djikstra(unsigned int max_vec, unsigned int start, std::vec
 
 		for (auto v : adj[u])
 		{
-			unsigned int i;
-			pq.in_queue(v.first, i);
-
-			if (pq.at(i)->d > ud + v.second)
+			if (v.first->d > ud + v.second)
 			{
-				pq.at(i)->parent = u;
-				pq.priority(v.first, ud + v.second);
+				v.first->parent = u;
+				pq.priority(v.first->val, ud + v.second);
 			}
 		}
 	}

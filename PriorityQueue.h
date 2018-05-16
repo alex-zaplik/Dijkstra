@@ -20,7 +20,7 @@ struct Element
 class PriorityQueue
 {
 private:
-	std::vector<Element> queue;
+	std::vector<std::shared_ptr<Element>> queue;
 	unsigned int heap_size;
 
 	bool find_next(unsigned int start, int x, unsigned int &i);
@@ -38,8 +38,8 @@ public:
 	void priority(unsigned int x, double d);
 	bool in_queue(unsigned int x);
 	bool in_queue(unsigned int x, unsigned int &i);
-	Element* at(unsigned int i);
-	std::vector<Element> get_data();
+	std::shared_ptr<Element> at(unsigned int i);
+	std::vector<std::shared_ptr<Element>> get_data();
 	std::string to_string();
 };
 

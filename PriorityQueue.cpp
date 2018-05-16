@@ -15,7 +15,7 @@ bool PriorityQueue::find_next(unsigned int start, int x, unsigned int &i)
 {
 	for (i = start; i < heap_size; i++)
 	{
-		if (queue[i].val == x)
+		if (queue[i]->val == x)
 		{
 			return true;
 		}
@@ -30,7 +30,7 @@ void PriorityQueue::heapify(unsigned int i)
 	unsigned int r = RIGHT(i);
 	unsigned int largest;
 
-	if (l < heap_size && queue[l].d < queue[i].d)
+	if (l < heap_size && queue[l]->d < queue[i]->d)
 	{
 		largest = l;
 	}
@@ -39,7 +39,7 @@ void PriorityQueue::heapify(unsigned int i)
 		largest = i;
 	}
 
-	if (r < heap_size && queue[r].d < queue[largest].d)
+	if (r < heap_size && queue[r]->d < queue[largest]->d)
 	{
 		largest = r;
 	}
@@ -53,7 +53,8 @@ void PriorityQueue::heapify(unsigned int i)
 
 void PriorityQueue::insert(int x, unsigned int parent, double d)
 {
-	Element e(x, parent, std::numeric_limits<double>::max());
+	std::shared_ptr<Element> e = std::make_shared<Element>(x, parent, std::numeric_limits<double>::max());
+	// Element* e = new Element(x, parent, std::numeric_limits<double>::max());
 	heap_size++;
 
 	if (heap_size > queue.size())
@@ -72,7 +73,7 @@ bool PriorityQueue::empty()
 
 unsigned int PriorityQueue::top()
 {
-	return queue[0].val;
+	return queue[0]->val;
 }
 
 unsigned int PriorityQueue::pop()
@@ -82,23 +83,23 @@ unsigned int PriorityQueue::pop()
 		return 0;
 	}
 
-	Element max = queue[0];
+	std::shared_ptr<Element> max = queue[0];
 	queue[0] = queue[heap_size - 1];
 	heap_size--;
 	heapify(0);
 
-	return max.val;
+	return max->val;
 }
 
 void PriorityQueue::inner_priority(unsigned int i, double d)
 {
-	if (d > queue[i].d)
+	if (d > queue[i]->d)
 	{
 		return;
 	}
 
-	queue[i].d = d;
-	while (i > 0 && queue[PARENT(i)].d > queue[i].d)
+	queue[i]->d = d;
+	while (i > 0 && queue[PARENT(i)]->d > queue[i]->d)
 	{
 		std::swap(queue[i], queue[PARENT(i)]);
 		i = PARENT(i);
@@ -110,9 +111,9 @@ void PriorityQueue::priority(unsigned int x, double d)
 	unsigned int i = 0;
 	while (find_next(i, x, i))
 	{
-		Element before = queue[i];
+		std::shared_ptr<Element> before = queue[i];
 		inner_priority(i, d);
-		if (queue[i].val == before.val && queue[i].d == before.d) i++;
+		if (queue[i]->val == before->val && queue[i]->d == before->d) i++;
 	}
 }
 
@@ -127,14 +128,14 @@ bool PriorityQueue::in_queue(unsigned int x, unsigned int &i)
 	return find_next(0, x, i);
 }
 
-Element* PriorityQueue::at(unsigned int i)
+std::shared_ptr<Element> PriorityQueue::at(unsigned int i)
 {
-	return &queue[i];
+	return queue[i];
 }
 
-std::vector<Element> PriorityQueue::get_data()
+std::vector<std::shared_ptr<Element>> PriorityQueue::get_data()
 {
-	return std::vector<Element>(queue.begin(), queue.begin() + heap_size - 1);
+	return std::vector<std::shared_ptr<Element>>(queue.begin(), queue.begin() + heap_size - 1);
 }
 
 std::string PriorityQueue::to_string()
@@ -143,7 +144,7 @@ std::string PriorityQueue::to_string()
 
 	for (unsigned int i = 0; i < heap_size; i++)
 	{
-		ss << "(" << queue[i].val << ", " << queue[i].d << ") ";
+		ss << "(" << queue[i]->val << ", " << queue[i]->d << ") ";
 	}
 
 	return ss.str();
