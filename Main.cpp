@@ -2,6 +2,7 @@
 #include <vector>
 #include <list>
 #include <algorithm>
+#include <chrono>
 
 #include "PriorityQueue.h"
 
@@ -54,6 +55,8 @@ std::vector<Element> Djikstra(unsigned int max_vec, unsigned int start, std::vec
 
 int main(int argc, char* argv[])
 {
+	std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
+
 	unsigned int n, m;
 	std::cin >> n >> m;
 
@@ -91,6 +94,10 @@ int main(int argc, char* argv[])
 		}
 		std::cerr << std::endl;
 	}
+
+	std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
+	long long exec_time = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+	std::cerr << "Time: " << exec_time << "ns" << std::endl;
 
 	return 0;
 }
