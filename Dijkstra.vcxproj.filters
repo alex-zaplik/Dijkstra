@@ -31,5 +31,28 @@
     <Text Include="test.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="err.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dijkstra1.in">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="dijkstra1.out">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="dijkstra2.in">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="dijkstra2.out">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="dijkstra3.in">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="dijkstra3.out">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

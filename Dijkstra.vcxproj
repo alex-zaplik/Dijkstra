@@ -122,7 +122,16 @@
     <ClInclude Include="PriorityQueue.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="err.txt" />
     <Text Include="test.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dijkstra1.in" />
+    <None Include="dijkstra1.out" />
+    <None Include="dijkstra2.in" />
+    <None Include="dijkstra2.out" />
+    <None Include="dijkstra3.in" />
+    <None Include="dijkstra3.out" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
